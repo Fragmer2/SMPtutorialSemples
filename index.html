@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>minimal config · minecraft snippets</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #fefefe;
+      font-family: system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+      color: #1a1e24;
+      line-height: 1.5;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* minimalist header */
+    .site-header {
+      margin-bottom: 3rem;
+      border-bottom: 1px solid #eaeef2;
+      padding-bottom: 1rem;
+    }
+    .site-header h1 {
+      font-size: 1.8rem;
+      font-weight: 500;
+      letter-spacing: -0.3px;
+      color: #121826;
+    }
+    .site-header p {
+      color: #4b5565;
+      margin-top: 0.3rem;
+      font-size: 0.95rem;
+    }
+    .badge {
+      background: #eef2f5;
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 30px;
+      color: #2c3e4e;
+      margin-top: 0.5rem;
+    }
+
+    /* card style – minimal, airy */
+    .snippet-card {
+      background: #ffffff;
+      border: 1px solid #e5e9f0;
+      border-radius: 20px;
+      margin-bottom: 2.5rem;
+      transition: box-shadow 0.1s ease;
+      overflow: hidden;
+    }
+    .snippet-card:hover {
+      border-color: #cdd4de;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding: 1.2rem 1.5rem 0.6rem 1.5rem;
+      background: #ffffff;
+      border-bottom: 1px solid #f0f2f6;
+    }
+    .card-title h2 {
+      font-size: 1.3rem;
+      font-weight: 500;
+      letter-spacing: -0.2px;
+      color: #0f1722;
+    }
+    .card-title .sub {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: #6c7a8e;
+      margin-top: 0.15rem;
+    }
+    .copy-btn {
+      background: #f2f4f8;
+      border: none;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 450;
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      cursor: pointer;
+      color: #1e2a3a;
+      transition: background 0.15s, color 0.1s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      backdrop-filter: blur(2px);
+    }
+    .copy-btn:hover {
+      background: #e4e9f0;
+    }
+    .copy-btn:active {
+      background: #d0d8e2;
+    }
+    .copied-feedback {
+      background: #d9f0e1;
+      color: #1f6e43;
+    }
+
+    /* code container — clean pre block */
+    .code-wrapper {
+      padding: 1rem 1.5rem 1.5rem 1.5rem;
+      background: #ffffff;
+    }
+    pre {
+      background: #f8fafc;
+      border-radius: 16px;
+      padding: 1.2rem;
+      margin: 0;
+      overflow-x: auto;
+      font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', 'Cascadia Code', monospace;
+      font-size: 0.8rem;
+      line-height: 1.45;
+      color: #1e2a3e;
+      border: 1px solid #ecf0f5;
+      white-space: pre;
+      word-break: normal;
+      tab-size: 2;
+    }
+    code {
+      font-family: inherit;
+      font-size: inherit;
+      background: transparent;
+      white-space: pre;
+    }
+
+    /* scroll inside pre for long lines */
+    pre::-webkit-scrollbar {
+      height: 6px;
+      width: 6px;
+    }
+    pre::-webkit-scrollbar-track {
+      background: #eef2f6;
+      border-radius: 8px;
+    }
+    pre::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 8px;
+    }
+
+    hr {
+      margin: 1rem 0 1.8rem 0;
+      border: none;
+      border-top: 1px solid #eef2f8;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #6f7c91;
+      border-top: 1px solid #edf2f7;
+      padding-top: 2rem;
+      margin-top: 1rem;
+    }
+    .footer-note a {
+      color: #3b6e8b;
+      text-decoration: none;
+    }
+
+    @media (max-width: 680px) {
+      body {
+        padding: 1rem;
+      }
+      .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .copy-btn {
+        align-self: flex-end;
+      }
+      pre {
+        font-size: 0.7rem;
+        padding: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="site-header">
+    <h1>⋆｡°✩ config vault</h1>
+    <p>copy + paste — ready for your minecraft server.<br>clean snippets for <strong>DeluxeMenus</strong>, <strong>MiniMOTD</strong>, <strong>TAB (header-footer + scoreboard)</strong></p>
+    <div class="badge">📋 click any copy button → use in your project</div>
+  </div>
+
+  <!-- 1. Guide Menu | Deluxe Menu (full config) -->
+  <div class="snippet-card" id="card-deluxemenu">
+    <div class="card-header">
+      <div class="card-title">
+        <h2>▸ Guide Menu · Deluxe Menu</h2>
+        <div class="sub">deluxemenus.yml — gui with rtp, spawn, auction, profile & more</div>
+      </div>
+      <button class="copy-btn" data-target="code-deluxemenu">📋 copy</button>
+    </div>
+    <div class="code-wrapper">
+      <pre id="code-deluxemenu"><code>open_command:
+  - guide
+  - menu
+  - help
+
+size: 27
+
+menu_title: "&f&lHELLO SMP GUIDE"
+
+items:
+
+  'border_top':
+    material: BLACK_STAINED_GLASS_PANE
+    display_name: " "
+    slots:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+
+  'border_bottom':
+    material: BLACK_STAINED_GLASS_PANE
+    display_name: " "
+    slots:
+      - 18
+      - 19
+      - 20
+      - 21
+      - 22
+      - 23
+      - 24
+      - 25
+      - 26
+
+  'rtp':
+    material: COMPASS
+    slot: 10
+    display_name: "&6&lRandom Teleport"
+    lore:
+      - "&7Teleport to a random"
+      - "&7location in survival."
+      - ""
+      - "&eClick to teleport"
+    left_click_commands:
+      - "[player] rtp"
+      - "[close]"
+    enchantments:
+      - "LUCK;1"
+    hide_enchantments: true
+
+  'spawn':
+    material: BEACON
+    slot: 11
+    display_name: "&e&lSpawn"
+    lore:
+      - "&7Return to spawn anytime."
+      - ""
+      - "&eClick to teleport"
+    left_click_commands:
+      - "[player] spawn"
+      - "[close]"
+
+  'auction':
+    material: GOLD_INGOT
+    slot: 12
+    display_name: "&6&lAuction House"
+    lore:
+      - "&7Buy and sell items"
+      - "&7with other players."
+      - ""
+      - "&eClick to open"
+    left_click_commands:
+      - "[player] ah"
+
+  'buyer':
+    material: EMERALD
+    slot: 13
+    display_name: "&a&lBuyer"
+    lore:
+      - "&7Sell your items"
+      - "&7for money."
+      - ""
+      - "&eClick to open"
+    left_click_commands:
+      - "[player] buyer"
+
+  'discord':
+    material: PLAYER_HEAD
+    slot: 14
+    display_name: "&9&lDiscord"
+    lore:
+      - "&7Join the community"
+      - "&7and stay updated."
+      - ""
+      - "&bdiscord.gg/hello"
+    left_click_commands:
+      - "[message] &9Discord: &fdiscord.gg/hello"
+
+  'rules':
+    material: BOOK
+    slot: 15
+    display_name: "&c&lServer Rules"
+    lore:
+      - "&7Be respectful"
+      - "&7No cheating"
+      - "&7No griefing"
+      - ""
+      - "&eClick to read"
+    left_click_commands:
+      - "[message] &6Rules:"
+      - "[message] &7- Respect players"
+      - "[message] &7- No hacks"
+      - "[message] &7- No griefing"
+
+  'profile':
+    material: PLAYER_HEAD
+    slot: 16
+    display_name: "&b&lYour Profile"
+    lore:
+      - "&7Rank: &f%luckperms_primary_group_name%"
+      - "&7Money: &a$%vault_eco_balance%"
+      - "&7Ping: &a%player_ping%ms"
+      - ""
+      - "&7World: &f%world%"
+
+  'close':
+    material: BARRIER
+    slot: 22
+    display_name: "&c&lClose Menu"
+    left_click_commands:
+      - "[close]"</code></pre>
+    </div>
+  </div>
+
+  <!-- 2. MiniMOTD (texts in the list of the servers) -->
+  <div class="snippet-card" id="card-minimotd">
+    <div class="card-header">
+      <div class="card-title">
+        <h2>▸ MiniMOTD · server list messages</h2>
+        <div class="sub">motd list configuration · rainbow & gradient support</div>
+      </div>
+      <button class="copy-btn" data-target="code-minimotd">📋 copy</button>
+    </div>
+    <div class="code-wrapper">
+      <pre id="code-minimotd"><code>motds=[
+    {
+        line1="<rainbow>Hello"
+        line2="Join Us <gradient:blue:red>Bro"
+        # Set the icon to use with this MOTD
+        #   Either use 'random' to randomly choose an icon, or use the name
+        #   of a file in the icons folder (excluding the '.png' extension)
+        #     ex: icon="myIconFile"
+        icon=random
+    }
+]</code></pre>
+    </div>
+  </div>
+
+  <!-- 3. header-footer (TAB plugin) -->
+  <div class="snippet-card" id="card-headerfooter">
+    <div class="card-header">
+      <div class="card-title">
+        <h2>▸ header-footer · TAB plugin</h2>
+        <div class="sub">designs.default — dynamic header/footer with placeholders</div>
+      </div>
+      <button class="copy-btn" data-target="code-headerfooter">📋 copy</button>
+    </div>
+    <div class="code-wrapper">
+      <pre id="code-headerfooter"><code>header-footer:
+  enabled: true
+
+  designs:
+    default:
+      header:
+        - ""
+        - "<#F7D44C>&lH</#F3C33B><#EEB232>&lE</#E9A129><#E49020>&lL</#DF7F17><#DA6E0E>&lL</#D55D05><#D04C00>&lO</#D04C00>"
+        - "&7play.hellosmp.net"
+        - ""
+        - "&fWelcome, &6%player%"
+        - "&7Online: &e%online% &8| &7Staff: &6%staffonline%"
+        - ""
+      footer:
+        - ""
+        - "&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        - "&fPing: &a%ping%ms"
+        - "&fWorld: &e%world%"
+        - "&fRank: &b%group%"
+        - ""
+        - "&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        - "&7&lWrite /guide to see what you can do!"
+        - ""</code></pre>
+    </div>
+  </div>
+
+  <!-- 4. scoreboard (TAB plugin) with two variants -->
+  <div class="snippet-card" id="card-scoreboard">
+    <div class="card-header">
+      <div class="card-title">
+        <h2>▸ scoreboard · TAB plugin</h2>
+        <div class="sub">two layouts: animated & classic, toggle commands & conditions</div>
+      </div>
+      <button class="copy-btn" data-target="code-scoreboard">📋 copy</button>
+    </div>
+    <div class="code-wrapper">
+      <pre id="code-scoreboard"><code>scoreboard:
+  enabled: true
+  toggle-command: /sb
+  remember-toggle-choice: false
+  hidden-by-default: false
+  delay-on-join-milliseconds: 0
+
+  scoreboards:
+    scoreboard-1.20.3+:
+      title: "<#ffcc00>&lHe<#ffaa00>llo</#ff6600>"
+      display-condition: "%player-version-id%>=765;%bedrock%=false"
+
+      lines:
+        - "&8&m━━━━━━━━━━━━━━━━━━"
+        - "&6&l☀ &f%player%"
+        - "&7%date%"
+        - ""
+        - "&e&lSERVER"
+        - "&fOnline: &6%online%"
+        - "&fStaff: &6%staffonline%"
+        - "&fWorld: &6%worldonline%"
+        - ""
+        - "&b&lPLAYER"
+        - "&fRank: &b%group%"
+        - "&fPing: &a%ping%ms"
+        - "&fBalance: &a%vault_eco_balance%"
+        - ""
+        - "&e%animation:MyAnimation1%"
+        - "&8&m━━━━━━━━━━━━━━━━━━"
+
+    scoreboard:
+      title: "&6&lYOURSERVER"
+
+      lines:
+        - "&8&m━━━━━━━━━━━━━━━━━━"
+        - "&6&l☀ &f%player%"
+        - "&7%date%"
+        - ""
+        - "&e&lSERVER"
+        - "&fOnline: &6%online%"
+        - "&fStaff: &6%staffonline%"
+        - "&fWorld: &6%worldonline%"
+        - ""
+        - "&b&lPLAYER"
+        - "&fRank: &b%group%"
+        - "&fPing: &a%ping%ms"
+        - "&fBalance: &a$%balance%"
+        - ""
+        - "&e%animation:MyAnimation1%"
+        - "&8&m━━━━━━━━━━━━━━━━━━"</code></pre>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    ✦ static snippets — copy & paste into your plugin configs ✦<br>
+    <span style="opacity:0.6;">DeluxeMenus, MiniMOTD, TAB (by NEZNAMY) — all placeholders work with PlaceholderAPI</span>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // minimal copy logic with visual feedback
+    const copyButtons = document.querySelectorAll('.copy-btn');
+
+    function showTemporaryFeedback(button, originalText) {
+      const originalWidth = button.style.width;
+      button.textContent = '✓ copied!';
+      button.classList.add('copied-feedback');
+      setTimeout(() => {
+        button.textContent = originalText;
+        button.classList.remove('copied-feedback');
+      }, 1800);
+    }
+
+    async function copyTextToClipboard(text, buttonElement) {
+      try {
+        await navigator.clipboard.writeText(text);
+        const original = buttonElement.textContent;
+        showTemporaryFeedback(buttonElement, original);
+      } catch (err) {
+        // fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        const original = buttonElement.textContent;
+        showTemporaryFeedback(buttonElement, original);
+      }
+    }
+
+    copyButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const targetId = btn.getAttribute('data-target');
+        if (!targetId) return;
+        const codeElement = document.getElementById(targetId);
+        if (!codeElement) return;
+
+        // get raw text content (preserves indentation, spaces, line breaks)
+        let rawText = '';
+        if (codeElement.tagName === 'PRE') {
+          // pre element with code inside
+          const codeChild = codeElement.querySelector('code');
+          if (codeChild) {
+            rawText = codeChild.innerText;
+          } else {
+            rawText = codeElement.innerText;
+          }
+        } else {
+          rawText = codeElement.innerText;
+        }
+        // ensure trailing newline not removed but it's okay
+        copyTextToClipboard(rawText, btn);
+      });
+    });
+
+    // optional: add small "copied" accessibility if needed
+    console.log('📦 static snippets ready — copy any config');
+  })();
+</script>
+</body>
+</html>
